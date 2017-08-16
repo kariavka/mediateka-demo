@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="css/plugin.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/styles-carousel.css" />
+    <link rel="stylesheet" href="css/style_stroke.css" />
+    <link rel="stylesheet" href="css/media.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+</head>
+<body>
+
+    <section class="sect1">
+        <header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 col-sm-1 col-xs-2">
+                        <img class="logotip" src="images/logotip.png"/>
+                    </div>
+                    <div class="col-md-3 col-sm-3 t_c col-xs-8 disp_b_768">
+                        <div class="block_lang">
+                            <a href="#">UA</a>
+                            <a href="#">RU</a>
+                        </div>
+                        <a class="btn_login" href=""><i class="fa fa-user">&nbsp; </i> Войти</a>
+                        <a class="btn btn-danger btn_reg">Регистрация</a>
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-xs-2 text-right block_top">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+                                <span class="sr-only">Навигация</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="collapse">
+                           <ul class="top_menu nav nav-pills">
+                                        <li><a href="#vozm">Возможности</a></li>
+                                        <li><a href="#products">Наши продукты</a></li>
+                                        <li><a href="#about">О Нас</a></li>
+                                        <li><a href="#">блог</a></li>
+                                    </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 t_c disp_n_768">
+                        <div class="block_lang">
+                            <a href="#">UA</a>
+                            <a href="#">RU</a>
+                        </div>
+                        <a class="btn_login" href=""><i class="fa fa-user">&nbsp; Войти</i></a>
+                        <a class="btn btn-danger btn_reg">Регистрация</a>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <div class="container cont2_sect1">
+            <div class="row">
+                <div class="col-md-12 text-center" id="search">
+                    <p class="text1">Media-activity</p>
+                    <p class="text2">Позволяет увидеть насколько активно и в каких каналах медиа упоминается твой бренд (фамилия,ТМ, компания и прочее, что может стать объектом обсуждений в медиа).</p>
+                    <form v-on:submit.prevent="onSubmit">
+                        <div class="search">
+                         <input type="search" placeholder="Перевір свій бренд ..." v-model="q" name="q"/>
+                         <button type="submit" class="btn_search btn-primary">
+                           <span  v-if="!loading">
+                             <span class="t_btn">Проверить</span> <i class="fa fa-search"></i>
+                           </span>
+                           <span  v-if="loading" v-cloak>
+                             Проверка <i class="fa fa-spin fa-circle-o-notch"></i>
+                           </span>
+                         </button>
+                       </div>
+                    </form>
+                    <div class="result" v-show="result" v-cloak>
+                        <div class="bg2_search bg2_search2">
+                            <p class="t1_bg2_search" v-if="result">Всього результатів: <span>{{result.total_results}}</span></p>
+                            <p class="t2_bg2_search">Поділитися результатами пошуку
+                              <div class="addthis_inline_share_toolbox">
+                            </p><div class="clearfix"></div>
+                        </div>
+                        <div class="bg2_search text-center bg2_search2">
+                            <canvas id="chart" width="900" height="400"></canvas>
+                        </div>
+                        <div class=" cont2_sect2_search" v-for="pair in pairs">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12" v-for="item in pair">
+                                    <div class="bg_result">
+                                        <div class="bg_text_result">
+                                        <p class="text_result">{{item.title}}</p>
+                                        </div>
+                                        <p class="calendar_result"><i class=" fa  fa-calendar "></i> {{item.date_page || item.date_load}} </p>
+                                        <p class="result_link_more"><a v-bind:href="item.url" target="_blank">Детальніше <i class="fa fa-angle-right"></i></a></p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                     <div class="bg2_search bg2_search2">
+                                        <p class="t2_s">Поділитися результатами пошуку</p>
+                                       <div class="addthis"><div class="addthis_inline_share_toolbox"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            
+             <p class="text3">источники мониторинга</p>
+        </div>
+<div class="clearfix"></div>
+        <div class="container cont3_sect1">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="wrapper-table">
+                        <div class="trig valign-center  text-center">
+                            <p class="t1_tr">20+</p>
+                            <p class="t2_tr">ТЕЛЕКАНАЛІВ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="wrapper-table">
+                        <div class="trig valign-center  text-center">
+                            <p class="t1_tr">8000+</p>
+                            <p class="t2_tr">ІНТЕРНЕТ-ЗМІ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="wrapper-table">
+                        <div class="trig valign-center  text-center">
+                            <p class="t1_tr">300+</p>
+                            <p class="t2_tr">ДРУКОВАНИХ ЗМІ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="wrapper-table">
+                        <div class="trig valign-center  text-center">
+                            <p class="t1_tr">15+</p>
+                            <p class="t2_tr">РАДІОСТАНЦІЙ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="t1_sect2">а также:</p>
+                </div>
+            </div>
+        </div>
+        <div class="container cont2_sect2">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <p class="t_soc"><i class="fa fa-facebook-official"></i> facebook</p>
+                    <p class="t_soc"><i class="fa fa-youtube-square"></i> YouTube</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <p class="t_soc"><i class="fa  fa-twitter-square"></i> Twitter</p>
+                    <p class="t_soc"><i class="fa fa-pencil-square"></i> LiveJornal</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <p class="t_soc"><i class="fa  fa-vk"></i> ВКонтакті</p>
+                    <p class="t_soc"><i class="fa  fa-odnoklassniki-square"></i> Однокласники</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <p class="t_soc"><i class="fa fa-comments"></i> Відгуки</p>
+                    <p class="t_soc"><i class="fa  fa-black-tie"></i> Вакансії, резюме</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect3" id="vozm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="t1_sect3">Возможности наших инструментов</p>
+                    <img src="images/figure.png"/>
+                </div>
+            </div>
+        </div>
+        <div class="container cont2_sect3">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger1.png"/>
+                    <p class="t_triger">Быть в курсе всех интересующих вас тем</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger2.png"/>
+                    <p class="t_triger">Оценка работы PR и отдела внешних коммуникаций</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger3.png"/>
+                    <p class="t_triger">Оперативное реагирование в кризисных ситуациях</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger4.png"/>
+                    <p class="t_triger">Конкурентная разведка </p>
+                </div>
+            </div>
+        </div>
+        <div class="container cont2_sect3">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger5.png"/>
+                    <p class="t_triger">Все информационное поле в единственной базе с доступом 24/7</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger6.png"/>
+                    <p class="t_triger">Формирование имиджевой и репутационной политики</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger7.png"/>
+                    <p class="t_triger">Мониторинг и анализ отзывов в социальных сетях</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-center">
+                    <img src="images/triger8.png"/>
+                    <p class="t_triger">Детальный анализ и подробные отчеты об упоминаниях бренда в СМИ и социальных сетях</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect4_1" id="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="text1_sect4_1">Инструменты <span>Mediateka</span> – возможность управлять репутацией</p>
+                    <img src="images/figure.png"/>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p class="media_analytics_img"><img src="images/media_analytics.png"/></p>
+                    <p class="t1_sect4">Профессиональный инструмент для  или компании. Анализирует объекты (тональ-ность  / репутационный кластер / охват) по всем типам медиа-ресурсов, представленным в Украине в режиме реального времени 24/7. Это телевидение и радио, печатные и интерент-издания, комментарии на новостных ресурсах, блогосфера и форумы, закрытые ленты ин-формационных агентств, социальные сети (Facebook, ВКонтакте, Одноклассники, Google+, Twitter), а также видеохостинг Youtube с комментариями пользователей. </p>
+
+                        <p class="t2_sect4">Возможности и достоинства</p>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_search.png"/> <span class="title_icon">Поиск информации</span>
+                            <p class="t3_sect4">Поиск информации, которую пишут о запросе в уникальной базе данных из тысяч он-лайн и оффлайн СМИ всех видов за один клик;</p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_archive.png"/> <span class="title_icon">Присутствие архивной информации</span>
+                            <p class="t3_sect4">Присутствие архивной информации по брендам, компаниям, рынку, авторам, линкам, блогерам, публичным персонам, сайтам и т.д.;</p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_checklist.png"/> <span class="title_icon">Обработка данных</span>
+                            <p class="t3_sect4">Обработка данных: фильтрация нерелевантных материалов, проставление кластера, тональности, дополнительных объектов;</p>
+                        </div>
+                        .
+                        <div class="hidden-c">
+                            <div class="box_icon">
+                                                    <img class="icon_search" src="images/icon_checklist.png"/> <span class="title_icon">Еще блок</span>
+                                                    <p class="t3_sect4">Появляется блок, если есть еще информация</p>
+                                                </div>
+                        </div>
+                        <p class="more-info">Читать далее  <i class="fa fa-angle-down"></i></p>
+
+                </div>
+                <div class="col-sm-12 disp_b_992 text-center">
+                    <a href="#"><img class="" src="images/noutbook_analytics_w650.png"/></a>
+                </div>
+
+            </div>
+        </div>
+        <a href="#"><img class="noutbook_analytics disp_n_992" src="images/noutbook2_analytics.png"/></a>
+    </section>
+    <section class="sect5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="t1_sect5">Зарегистрируйтесь на тестовый период 30 дней</p>
+                    <form action="/" class="form1">
+                        <div class="row inp1">
+                            <div class="col-md-12">
+                                <input name="e-mail" class="e-mail" placeholder="Введите свой e-mail" type="text" />
+                                    <img class="ic_mail" src="images/ic_mail.png"/>
+                                <button type="submit" class="btn btn-danger">
+                                   Зарегистрироваться
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect6">
+        <a href="#"><img class="noutbook_monitoring disp_n_992" src="images/noutbook_monitoring.png"/></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 disp_n_992"></div>
+                <div class="col-md-6 col-sm-12">
+                    <p class="media_analytics_img"><img src="images/media_monitoring.png"/></p>
+                    <p class="t1_sect4">Всегда держите руку на пульсе различных информационных потоков или PR-компании вме-сте с Media Monitoring. С помощью этого инструмента Вы получаете мгновенный доступ к информации более чем из 2500 источников по любым ключевым словам и источникам</p>
+
+                        <p class="t2_sect4">Возможности и достоинства</p>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_mortarboard.png"/> <span class="title_icon">Мы научим вас использовать систему </span>
+                            <p class="t3_sect4">Мы научим вас использовать систему для четкой и эффективной аналитики по оценке коммуникационной и/или  PR-кампании, выявления тенденций к изменению тональ-ности упоминаний вашего имени или бренда, анализа эффективности внутренних и внешних коммуникаций;</p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_checklist.png"/> <span class="title_icon">Постоянная обработка данных</span>
+                            <p class="t3_sect4">Постоянная обработка данных более, чем из 2500 различных источников: печатные и интернет-издания, ТВ, социальные сети, информационные агентства и радиостанции;</p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_save.png"/> <span class="title_icon">Найденная информация сохраняется в базе </span>
+                            <p class="t3_sect4">Найденная информация сохраняется в нашей собственной базе и будет доступна даже после ее удаления из первоисточника;</p>
+                        </div>
+                        .
+                        <div class="hidden-c2">
+                            <div class="box_icon">
+                                                    <img class="icon_search" src="images/icon_checklist.png"/> <span class="title_icon">Еще блок</span>
+                                                    <p class="t3_sect4">Появляется блок, если есть еще информация</p>
+                                                </div>
+                        </div>
+                        <p class="more-info2">Читать далее  <i class="fa fa-angle-down"></i></p>
+
+                </div>
+                <div class="col-sm-12 disp_b_992 text-center">
+                    <a href="#"><img class="" src="images/noutbook_monitoring_w650.png"/></a>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <section class="sect7">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="t1_sect5">Зарегистрируйтесь на тестовый период 30 дней</p>
+                    <form action="/" class="form1">
+                        <div class="row inp1">
+                            <div class="col-md-12">
+                                <input name="e-mail" class="e-mail" placeholder="Введите свой e-mail" type="text" />
+                                    <img class="ic_mail" src="images/ic_mail.png"/>
+                                <button type="submit" class="btn btn-danger">
+                                   Зарегистрироваться
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p class="media_analytics_img"><img src="images/media_alerting.png"/> </p>
+                    <p class="t1_sect4">Версия для оперативных антикризисных коммуникаций, позволяющая получать на электрон-ную почту материал с тематическим упоминанием из Интернет через 3 минуты с момента выхода, из теле-радио потоков через 5 минут, из утренней прессы до открытия киосков 07:00. Вы гарантировано будете первыми узнавать о любых интересующих Вас новостях. </p>
+
+                        <p class="t2_sect4">Возможности и достоинства</p>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_idea.png"/> <span class="title_icon">Уникальная программная разработка</span>
+                            <p class="t3_sect4">Уникальная программная разработка, которая обеспечивает максимальную скорость получения медиа данных; </p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_envelope.png"/> <span class="title_icon">Использует ваш электронный ящик</span>
+                            <p class="t3_sect4">Использует ваш электронный ящик, как наилучший интерфейс для оперативного мо-ниторинга алертов; </p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_chat.png"/> <span class="title_icon">Полный текст подсвечивается</span>
+                            <p class="t3_sect4">Полный текст подсвечивается, имеет гиперактивную ссылку; </p>
+                        </div>
+                        <div class="box_icon">
+                            <img class="icon_search" src="images/icon_presentation.png"/> <span class="title_icon">Открытый линк на видеоролик </span>
+                            <p class="t3_sect4">Открый линк на видеоролик и частичная стенограмма с подсвечивающимся текстом; </p>
+                        </div>
+                </div>
+                <div class="col-sm-12 disp_b_992 text-center">
+                    <a href="#"><img class="" src="images/noutbook_alerting_w650.png"/></a>
+                </div>
+
+            </div>
+        </div>
+        <a href="#"><img class="noutbook_alerting disp_n_992" src="images/noutbook_alerting.png"/></a>
+    </section>
+    <section class="sect9">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="t1_sect5">Зарегистрируйтесь на тестовый период 30 дней</p>
+                    <form action="/" class="form1">
+                        <div class="row inp1">
+                            <div class="col-md-12">
+                                <input name="e-mail" class="e-mail" placeholder="Введите свой e-mail" type="text" />
+                                    <img class="ic_mail" src="images/ic_mail.png"/>
+                                <button type="submit" class="btn btn-danger">
+                                   Зарегистрироваться
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect10" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <p class="media_analytics_img"><img class="logotip_big" src="images/logotip_big.png"/></p>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-12">
+                    <p class="t1_esct10">Наши продукты позволяют публичной персоне, аналитику, PR-менеджеру, бренд-менеджеру или пресс-секретарю существенно повысить свою экспертизу в коммуникационной страте-гии бренда. С их помощью вы сможете не только отслеживать текущую ситуацию в режиме реального времени, но и получите мощный и эффективный рычаг для воздействия на нее. Наши эксперты помогут проработать кейсы использования системы под ваши коммуника-ционные задачи и под выделенное для этих задач время.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect11">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2 col-sm-6 col-xs-6">
+                    <img class="numb" src="images/80.png"/>
+                    <p class="t_sect11"> > 80 клієнтів вже користуються системою Mediateka</p>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <img class="numb" src="images/70.png"/>
+                    <p class="t_sect11"> > 70 прес-служб та PR-департаментів органів державної влади</p>
+                </div>
+            </div>
+        </div>
+        <p class="text-center t_2sect11">Наши партнеры</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="carousel">
+                    <div class="carousel-button-left"><a href="#"><i class="fa  fa-angle-left "></i></a></div>
+      <div class="carousel-button-right"><a href="#"><i class="fa fa-angle-right "></i></a></div>
+                		<div class="carousel-wrapper">
+                		   <div class="carousel-items">
+                			  <div class="carousel-block">
+                					<img src="images/grou.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/obolon.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/danone.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/gdf.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/tis.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/mininf.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/detektor.png" alt="" />
+                			  </div>
+                			  <div class="carousel-block">
+                					<img src="images/vox.png" alt="" />
+                			  </div>
+                		   </div>
+                		</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sect12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-6">
+                    <p class="t_sect12">TOP LOCATIONS</p>
+                    <ul class="list_bottom">
+                        <li><a href="#">Lorem ipsum dolor</a></li>
+                        <li><a href="#">Sit amet consectetur</a></li>
+                        <li><a href="#">Adipisicing elit</a></li>
+                        <li><a href="#">Eiusmod tempor </a></li>
+                        <li><a href="#">Incididunt ut labore </a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6 block2_bot">
+                    <p class="t_sect12">FEATURED BOATS</p>
+                    <ul class="list_bottom">
+                        <li><a href="#">Lorem ipsum dolor</a></li>
+                        <li><a href="#">Sit amet consectetur</a></li>
+                        <li><a href="#">Adipisicing elit</a></li>
+                        <li><a href="#">Eiusmod tempor </a></li>
+                    </ul>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-6 wid">
+                    <p class="t_sect12">SUBSCRIBE TO OUR NEWSLETTER</p>
+                    <form class="form_bottom">
+                        <div class="subs">
+                         <input type="email" placeholder="Your email adress"/>
+                         <button type="submit" class="btn_subs btn-danger">SUBSCRIBE</button>
+                            <div class="valign-center text-center block_soc">
+                                <a href="#"><div class="round"><i class="fa fa-facebook"></i></div></a>
+                            </div>
+                            <div class="valign-center text-center block_soc">
+                                <a href="#"><div class="round"><i class="fa fa-twitter"></i></div></a>
+                            </div>
+                            <div class="valign-center text-center block_soc">
+                                <a href="#"><div class="round"><i class="fa fa-google-plus"></i></div></a>
+                            </div>
+
+
+                       </div>
+                    </form>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wid wid2">
+                    <p class="t_sect12">CONTACT US</p>
+                    <ul class="list_bottom">
+                        <li><a href="#">Lorem ipsum dolor</a></li>
+                        <li><a href="#">Sit amet consectetur</a></li>
+                        <li><a href="#">Adipisicing elit</a></li>
+                        <li><a href="#">Eiusmod tempor </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-7 col-sm-6 col-xs-6 text-left">
+                        <p class="copy">© 2015 Медіатека. Всі права захищені.</p>
+                    </div>
+                   <div class="col-md-5 col-sm-6 col-xs-6">
+                    <div class="box6_bot text-right">
+                        <a title="Проектування і розробка" href="https://www.livarava.com/" target="_blank"><img
+                                class="pull-right logo_livarava" src="images/logo_livarava.png"/></a>
+                        <p class="text4_sect11">Проектування і розробка<br/>
+                            <a href="https://www.livarava.com/product/118156/" target="_blank">Інформація про веб-сайт</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </footer>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Mandatory third-party scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"
+            integrity="sha256-aUydBd3D3p3+5tVJXERlqMtoCej+p4tdD+dkJgeRWNU=" crossorigin="anonymous"></script>
+    <!-- <script src="js/bootstrap.js"></script> -->
+    <script src="js/carousel.js"></script>
+
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5862d2fdae0eb2ec"></script>
+
+    <script>
+        $(document).ready(function() {
+            var moreInfo = false;
+            $('.more-info').click(function() {
+                moreInfo = !moreInfo;
+
+                if (moreInfo) {
+                    $('.hidden-c').slideDown();
+                }
+                if (!moreInfo) {
+                    $('.hidden-c').slideUp();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            var moreInfo = false;
+            $('.more-info2').click(function() {
+                moreInfo = !moreInfo;
+
+                if (moreInfo) {
+                    $('.hidden-c2').slideDown();
+                }
+                if (!moreInfo) {
+                    $('.hidden-c2').slideUp();
+                }
+            });
+
+        });
+    </script>
+
+    <!-- Main script -->
+    <script src="js/search/search.js"></script>
+ <script>
+    var $page = $('html, body');
+$('a[href*="#"]').click(function() {
+    $page.animate({
+        scrollTop: $($.attr(this, 'href')).offset().top
+    }, 600);
+    return false;
+});
+    </script>
+
+</body>
+</html>
